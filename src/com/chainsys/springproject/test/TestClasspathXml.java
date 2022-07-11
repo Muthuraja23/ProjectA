@@ -5,6 +5,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.chainsys.springproject.autowire.Car;
+import com.chainsys.springproject.autowire.CarServices;
 import com.chainsys.springproject.beans.Actor;
 import com.chainsys.springproject.beans.Calendar;
 import com.chainsys.springproject.beans.Customer;
@@ -122,12 +123,14 @@ public class TestClasspathXml {
 		ConfigurableApplicationContext ac1 = new ClassPathXmlApplicationContext("Lc.xml");
 		InitDesposeBean init=ac1.getBean(InitDesposeBean.class);
 		init.print();
+		init.close();
 	}
 	public static void testAnnotionLc() {
 		ConfigurableApplicationContext ac1 = new ClassPathXmlApplicationContext("Lc.xml");
 		AnnotationLc anlc=ac1.getBean(AnnotationLc.class);
 		anlc.print();
 		anlc=null;
+		ac1.close();
 		
 	}
 	public static void testAutoWire() {
@@ -138,4 +141,11 @@ public class TestClasspathXml {
 		car=null;
 		ac1.close();
 	}
+	public static void testAutowireQualifier() {
+		ConfigurableApplicationContext ac1 = new ClassPathXmlApplicationContext("Autowire.xml");
+		CarServices cs = ac1.getBean(CarServices.class);
+		cs.startTrip();
+		ac1.close();
+	}
+
 }
